@@ -14,6 +14,7 @@ class Firework {
     this.velocityY = velocityY;
     this.color = color;
     this.opacity = 1
+
   }
   update() {
       this.velocityY -= gravity;
@@ -29,7 +30,7 @@ class Firework {
       canvasContext.globalAlpha = this.opacity
       canvasContext.beginPath()
       canvasContext.arc(this.x, this.y,this.radius, 0, 2 *Math.PI, false)
-      canvasContext.fillStyle= color
+      canvasContext.fillStyle= this.color
       canvasContext.fill()
       canvasContext.closePath()
       canvasContext.restore()
@@ -46,7 +47,7 @@ let colors = ["Blue", "Orange", "Red", "Purple', 'Green"];
 let intializeCount = 0;
 let maximumIntialize = 1;
 let initDelay = 500
-let fireworkRadius = 5
+let fireworkRadius = 10;
 let particleCount = 20
 let speedMultiplier = 7
 
@@ -65,7 +66,8 @@ let update = () => {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
     if(intializeCount<maximumIntialize){
             let firework = new Firework(Math.random()*canvas.width, canvas.height+Math.random()*70,
-                                       fireworkRadius, 3*(Math.random()- 0.5), -12)
+                                       fireworkRadius, 3*(Math.random()- 0.5), -12,
+                                       colors[Math.floor(Math.random()*colors.length)])
             fireworks.push(firework)
             setTimeout(() => {
                 intializeCount--;
@@ -74,7 +76,7 @@ let update = () => {
     }
     fireworks.forEach((fireworks,i)=>{
         if(fireworks.opacity <= 0.1){
-            fireworks.splice(i, 1)
+            fireworks.splice(i, 1);
             createSubFireworks()
         }
         else{
@@ -87,3 +89,4 @@ let draw = () => {
         firework.draw()
     })
 };
+animate()
