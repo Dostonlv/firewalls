@@ -19,8 +19,22 @@ class Firework {
       this.velocityY -= gravity;
       this.x += this.velocityX
       this.y += this.velocityY
+      this.opacity -= 0.006
+      if(this.opacity<0){
+          this.opacity =0
+      }
   }
-  draw() {}
+  draw() {
+      canvasContext.save();
+      canvasContext.globalAlpha = this.opacity
+      canvasContext.beginPath()
+      canvasContext.arc(this.x, this.y,this.radius, 0, 2 *Math.PI, false)
+      canvasContext.fillStyle= color
+      canvasContext.fill()
+      canvasContext.closePath()
+      canvasContext.restore()
+
+  }
 }
 
 let animate = () => {
@@ -39,7 +53,9 @@ let update = () => {
     canvasContext.fillStyle = 'rgba(0,0,0,0.5)'
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
     if(intializeCount<maximumIntialize){
-
+            let firework = new Firework(Math.random()*canvas.width, canvas.height+Math.random()*70,
+                                       fireworkRadius, 3*(Math.random()- 0.5), -12)
+            
     }
     fireworks.forEach((fireworks,i)=>{
         if(fireworks.opacity <= 0.1){
